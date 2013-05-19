@@ -1,0 +1,11 @@
+// Insert app styles here
+
+@import "compass"
+
+#logo
+  @include replace-text-with-dimensions('logo.png')
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5)
+  #logo
+    background-image: image-url('logo@2x.png')
+    -webkit-background-size: image-width('logo.png') image-height('logo.png')
