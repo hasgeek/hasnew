@@ -15,3 +15,25 @@
     -webkit-background-size: 150px 75px;
   }
 }
+.post-set {
+  list-style: none;
+}
+
+.post-item {
+  overflow: hidden;
+  *zoom: 1;
+  margin-bottom: 10px;
+}
+
+.post-vote {
+  float: left;
+  width: 1.5em;
+}
+
+.post-main {
+  margin-left: 1.5em;
+}
+.post-main .title {
+  font-size: 110%;
+  font-weight: 600;
+}

@@ -1,10 +1,6 @@
 {% extends "layout.html" %}
+{% from "macros.html" import postlist %}
 {% block title %}{{ profile.title }}{% endblock %}
 {% block content %}
-  <ul>
-    {%- for post in profile.posts %}
-      <li><a href="{{ post.url_for() }}">{{ post.title }}</a></li>
-    {%- else %}
-      <li><em>(No posts yet)</em></li>
-    {%- endfor %}
+  {{ postlist(profile.posts, profile=profile) }}
 {% endblock %}

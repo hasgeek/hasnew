@@ -8,5 +8,5 @@ from ..models import Post
 @app.route('/')
 @render_with('index.html')
 def index():
-    posts = Post.query.order_by('created_at desc').limit(100).all()
+    posts = Post.query.order_by(Post.created_at.desc()).limit(100).all()
     return {'posts': posts}

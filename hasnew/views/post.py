@@ -4,7 +4,7 @@ from flask import g, flash
 from coaster.views import load_model, load_models, render_with
 from baseframe.forms import render_form, render_redirect, render_delete_sqla
 from .. import app, lastuser
-from ..models import db, Profile, Post, UserPostVisit
+from ..models import db, commentease, Profile, Post, UserPostVisit
 from ..forms import PostForm
 
 
@@ -20,7 +20,25 @@ def post_view(profile, post):
         visit.visited = True
         visit.update()
         db.session.commit()
-    return {'profile': profile, 'post': post}
+    return {'profile': profile, 'post': post, 'commentease_forms': commentease.forms()}
+
+
+@app.route('/<profile>/<post>/vote', methods=['GET', 'POST'])
+@load_models(
+    (Profile, {'name': 'profile'}, 'profile'),
+    (Post, {'url_name': 'post', 'profile': 'profile'}, 'post')
+    )
+def post_vote(profile, post):
+    return commentease.comment_action(post.votes, g.user, post.permissions(g.user))
+
+
+@app.route('/<profile>/<post>/comment', methods=['GET', 'POST'])
+@load_models(
+    (Profile, {'name': 'profile'}, 'profile'),
+    (Post, {'url_name': 'post', 'profile': 'profile'}, 'post')
+    )
+def post_comment(profile, post):
+    return commentease.comment_action(post.comments, g.user, post.permissions(g.user))
 
 
 @app.route('/<profile>/new', methods=['GET', 'POST'])
@@ -30,6 +48,8 @@ def post_new(profile):
     form = PostForm()
     if form.validate_on_submit():
         post = Post(profile=profile, user=g.user)
+        commentease.enable_voting(post)
+        commentease.enable_commenting(post)
         form.populate_obj(post)
         post.make_name()
         db.session.add(post)

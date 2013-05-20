@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from flask import url_for
 from coaster.sqlalchemy import TimestampMixin, BaseNameMixin
 from flask.ext.lastuser.sqlalchemy import ProfileMixin
 from . import db
@@ -14,6 +15,18 @@ class Profile(ProfileMixin, BaseNameMixin, db.Model):
     """
     __tablename__ = 'profile'
     userid = db.Column(db.Unicode(22), nullable=False, unique=True)
+
+    def permissions(self, user, inherited=None):
+        perms = super(Profile, self).permissions(user, inherited)
+        if user and self.userid in user.user_organizations_owned_ids():
+            perms.add('new-post')
+        return perms
+
+    def url_for(self, action='view', _external=False):
+        if action == 'view':
+            return url_for('profile_view', profile=self.name, _external=_external)
+        elif action == 'new-post':
+            return url_for('post_new', profile=self.name, _external=_external)
 
 
 class UserProfileVisit(TimestampMixin, db.Model):

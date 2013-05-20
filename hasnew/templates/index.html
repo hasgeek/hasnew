@@ -1,15 +1,10 @@
 {% extends "layout.html" %}
+{% from "macros.html" import postlist %}
 {% block titletags -%}
   <title>{% block title %}{{ config['SITE_TITLE'] }}{% endblock %}</title>
   <meta name="DC.title" content="{{ config['SITE_TITLE'] }}"/>
 {%- endblock %}
 
 {% block content %}
-  <ul>
-    {% for post in posts %}
-      <li><a href="{{ post.url_for() }}">{{ post.title }}</a></li>
-    {% else %}
-      <li><em>There are no posts</em></li>
-    {% endfor %}
-  </ul>
+  {{ postlist(posts) }}
 {% endblock %}

@@ -1,0 +1,24 @@
+{% macro postlist(posts, profile=none) %}
+  <ol class="post-set row">
+    {%- for post in posts %}
+      <li class="post-item span9">
+        <div class="post-vote">
+          <a href=""><i class="icon-chevron-up"></i></a>
+          <a href=""><i class="icon-chevron-down"></i></a>
+        </div>
+        <div class="post-main">
+          <a class="title" href="{{ post.url_for() }}">{{ post.title }}</a>
+          {% if post.url %}(<a href="{{ post.url }}">link</a>){% endif %}
+          <br>
+          X points by <a href="{{ post.user.profile_url }}">{{ post.user.fullname }}</a>
+          {%- if post.user.userid != post.profile.userid and post.profile != profile %}
+            in <a href="{{ post.profile.url_for() }}">{{ post.profile.title }}</a>
+          {%- endif %}
+          | 0 comments
+        </div>
+      </li>
+    {%- else %}
+      <li class="post-item span9"><em>(No posts yet)</em></li>
+    {%- endfor %}
+  </ol>
+{% endmacro %}

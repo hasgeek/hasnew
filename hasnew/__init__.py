@@ -18,7 +18,7 @@ lastuser = Lastuser()
 # Second, import the models and views
 
 from . import models, views
-from .models import db
+from .models import db, commentease
 
 # Third, setup baseframe and assets
 
@@ -29,6 +29,7 @@ assets['hasnew.css'][version] = 'css/app.css'
 # Configure the app
 def init_for(env):
     coaster.app.init_app(app, env)
-    baseframe.init_app(app, requires=['baseframe', 'hasnew'])
+    baseframe.init_app(app, requires=['baseframe', 'commentease', 'hasnew'])
+    commentease.init_app(app)
     lastuser.init_app(app)
     lastuser.init_usermanager(UserManager(db, models.User))

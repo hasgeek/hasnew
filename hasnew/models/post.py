@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from markdown import Markdown
 from flask import Markup, url_for
+from flask.ext.commentease import VotingMixin, CommentingMixin
 from coaster.sqlalchemy import TimestampMixin, BaseScopedIdNameMixin
+from coaster.gfm import markdown
 from . import db
 from .user import User
 from .profile import Profile
 
 __all__ = ['Post', 'UserPostVisit']
 
-markdown = Markdown(safe_mode="escape").convert
 
-
-class Post(BaseScopedIdNameMixin, db.Model):
+class Post(VotingMixin, CommentingMixin, BaseScopedIdNameMixin, db.Model):
     """A post"""
     __tablename__ = 'post'
     profile_id = db.Column(None, db.ForeignKey('profile.id'), nullable=False)
@@ -50,13 +49,17 @@ class Post(BaseScopedIdNameMixin, db.Model):
                 perms.add('delete')
         return perms
 
-    def url_for(self, action='view'):
+    def url_for(self, action='view', _external=False):
         if action == 'view':
-            return url_for('post_view', profile=self.profile.name, post=self.url_name)
+            return url_for('post_view', profile=self.profile.name, post=self.url_name, _external=_external)
         elif action == 'edit':
-            return url_for('post_edit', profile=self.profile.name, post=self.url_name)
+            return url_for('post_edit', profile=self.profile.name, post=self.url_name, _external=_external)
         elif action == 'delete':
-            return url_for('post_delete', profile=self.profile.name, post=self.url_name)
+            return url_for('post_delete', profile=self.profile.name, post=self.url_name, _external=_external)
+        elif action == 'vote':
+            return url_for('post_vote', profile=self.profile.name, post=self.url_name, _external=_external)
+        elif action == 'comments':
+            return url_for('post_comment', profile=self.profile.name, post=self.url_name, _external=_external)
 
 
 class UserPostVisit(TimestampMixin, db.Model):

@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "commentease/macros.html" import comments, ajaxcomments %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
   {%- if post.url %}
@@ -9,4 +10,12 @@
   {%- if post.description_html %}
     {{ post.description_html }}
   {%- endif %}
+  {% if post.comments %}
+      {{ comments(post, g.user, post.url_for('comments'), commentease_forms) }}
+  {% endif %}
 {% endblock %}
+
+{#{% block footerscripts %}
+  {{ ajaxcomments(request) }}
+{% endblock %}
+#}
