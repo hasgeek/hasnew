@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import Markup, url_for
-from flask.ext.commentease import VotingMixin, CommentingMixin
+from flask_commentease import VotingMixin, CommentingMixin
 from coaster.sqlalchemy import TimestampMixin, BaseScopedIdNameMixin
 from coaster.gfm import markdown
 from . import db

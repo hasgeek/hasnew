@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.commentease import Commentease
+from flask_sqlalchemy import SQLAlchemy
+from flask_commentease import Commentease
 from .. import app
 
 db = SQLAlchemy(app)

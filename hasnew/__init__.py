@@ -3,8 +3,8 @@
 # The imports in this file are order-sensitive
 from __future__ import absolute_import
 from flask import Flask
-from flask.ext.lastuser import Lastuser
-from flask.ext.lastuser.sqlalchemy import UserManager
+from flask_lastuser import Lastuser
+from flask_lastuser.sqlalchemy import UserManager
 from baseframe import baseframe, assets, Version
 import coaster.app
 
