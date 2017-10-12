@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% from "commentease/macros.html" import comments, ajaxcomments %}
+{% extends "layout.html.jinja2" %}
+{% from "commentease/macros.html.jinja2" import comments, ajaxcomments %}
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
   {%- if post.url %}

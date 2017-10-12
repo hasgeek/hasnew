@@ -1,5 +1,5 @@
-{% extends "baseframe.html" -%}
-{% from "baseframe/components.html" import flash_messages with context %}
+{% extends "baseframe.html.jinja2" -%}
+{% from "baseframe/components.html.jinja2" import flash_messages with context %}
 
 {% block messages %}{# Don't use baseframe's messages #}{% endblock %}
 {% block baseheadline %}{# Don't use baseframe's headline #}{% endblock %}

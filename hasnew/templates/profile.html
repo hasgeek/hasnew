@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% from "macros.html" import postlist %}
+{% extends "layout.html.jinja2" %}
+{% from "macros.html.jinja2" import postlist %}
 {% block title %}{{ profile.title }}{% endblock %}
 {% block content %}
   {{ postlist(profile.posts, profile=profile) }}
