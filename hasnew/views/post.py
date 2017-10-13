@@ -9,7 +9,7 @@ from ..forms import PostForm
 
 
 @app.route('/<profile>/<post>')
-@render_with('post.html')
+@render_with('post.html.jinja2')
 @load_models(
     (Profile, {'name': 'profile'}, 'profile'),
     (Post, {'url_name': 'post', 'profile': 'profile'}, 'post')
